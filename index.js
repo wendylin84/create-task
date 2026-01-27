@@ -17,48 +17,60 @@ function inject(card) {
     "afterbegin",
     `<div class="card">
       <h2 class="question">${card.question}</h2>
-    </div>`
+    </div>`,
   );
 }
+inject(card);
 
-function addtoArray() {
+function flipCard() {
   const selectCard = document.querySelector(".card");
+  let display = document.querySelector("#flashcards");
   selectCard.addEventListener("click", function (event) {
     document.innerHTML = "";
-  });
-}
-
-function filterByCategory(category) {
-  let display = document.querySelector("#flashcards");
-  display.innerHTML = "";
-  const filteredCategory = cards.filter((card) => card.category === category);
-  filteredCategory.forEach((card) =>
     display.insertAdjacentHTML(
       "afterbegin",
       `<div class="card">
-      <h2 class="question">${card.question}</h2>
-    </div>`
-    )
-  );
+      <h2 class="answer">${card.answer}</h2>
+      <button id="dontKnow">Still Need to Study</button>
+      <button id="know">Studied</button>
+    </div>`,
+    );
+  });
 }
 
 function filterByButton() {
+  let display = document.querySelector("#flashcards");
+  display.innerHTML = "";
   const buttons = document.querySelectorAll("button");
   const btnArr = Array.from(buttons);
   btnArr.forEach((btn) =>
     btn.addEventListener("click", function (event) {
       if (btn.id === "dontKnow") {
-        filterByCategory("Still Need to Study");
+        dontknowArray.forEach((card) => {
+          display.insertAdjacentHTML(
+            "afterbegin",
+            `<div class="card">
+      <h2 class="question">${card.question}</h2>
+    </div>`,
+          );
+        });
       }
       if (btn.id === "know") {
-        filterByCategory("Studied");
+        knowArray.forEach((card) => {
+          display.insertAdjacentHTML(
+            "afterbegin",
+            `<div class="card">
+      <h2 class="question">${card.question}</h2>
+    </div>`,
+          );
+        });
       }
       if (btn.id === "restart") {
         let display = document.querySelector("#flashcards");
         display.innerHTML = "";
         inject(card);
       }
-    })
+    }),
   );
 }
 filterByButton();
