@@ -1,18 +1,20 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flashcards</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="container">
-      <button id="dontKnow">Still Need to Study</button>
-      <button id="know">Studied</button>
-      <button id="restart">Restart Flashcards</button>
-      <div id="flashcards"></div>
+    <h1 class="head">Flashcards</h1>
+    <div class="container">
+      <div class="filterButtons">
+        <button class="dontKnow">Still Need to Study</button>
+        <button class="know">Studied</button>
+        <button class="restart">Restart Flashcards</button>
+      </div>
+      <div class="flashcards"></div>
     </div>
-    <script type="module" src="/src/main.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 const cards = [
   {
-    question: "What is the capital of France?",
-    answer: "Paris",
+    question: "What is the cooldown of Hermit's charge?",
+    answer: "12 seconds",
   },
   {
     question: "What is the largest planet in our solar system?",
@@ -12,7 +12,7 @@ let dontknowArray = {};
 let knowArray = {};
 
 function inject(card) {
-  const flashcards = document.querySelector("#flashcards");
+  const flashcards = document.querySelector(".flashcards");
   flashcards.insertAdjacentHTML(
     "afterbegin",
     `<div class="card">
@@ -66,7 +66,7 @@ function filterByButton() {
         });
       }
       if (btn.id === "restart") {
-        let display = document.querySelector("#flashcards");
+        let display = document.querySelector(".flashcards");
         display.innerHTML = "";
         inject(card);
       }
