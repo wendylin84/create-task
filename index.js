@@ -8,8 +8,8 @@ const cards = [
     answer: "Jupiter",
   },
 ];
-let dontknowArray = {};
-let knowArray = {};
+let dontknowArray = [];
+let knowArray = [];
 
 function inject(card) {
   const flashcards = document.querySelector(".flashcards");
@@ -35,6 +35,20 @@ function flipCard() {
       <button id="know">Studied</button>
     </div>`,
     );
+  });
+}
+
+function sendtoArray() {
+  const buttons = document.querySelectorAll("button");
+  const btnArr = Array.from(buttons);
+  btnArr.forEach((btn) => {
+    btn.addEventListener("click", function (event) {
+      if (event.target.id === "dontKnow") {
+        dontknowArray.push(card);
+      } else if (event.target.id === "know") {
+        knowArray.push(card);
+      }
+    });
   });
 }
 
