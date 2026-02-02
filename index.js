@@ -65,8 +65,54 @@ function showCards(index) {
     </div>`,
   );
 }
+document.querySelector(".flashcards").addEventListener("click", (e) => {
+  const cardEl = e.target.closest(".card");
+  const idx = cardEl?.dataset.index
+    ? Number(cardEl.dataset.index)
+    : currentIndex;
 
-function flipCard() {
+  // show answer when clicking the card itself (ignore clicks on buttons)
+  if (cardEl && !e.target.closest("button")) {
+    const questionSwitch = cardEl.querySelector(".question");
+    const answerSwitch = cardEl.querySelector(".answer");
+    if (questionSwitch) {
+      // replace question with answer
+      questionSwitch.textContent = cards[idx].answer;
+      questionSwitch.classList.remove("question");
+      questionSwitch.classList.add("answer");
+    } else if (answerSwitch) {
+      // if answer already shown, toggle back to question
+      answerSwitch.textContent = cards[idx].question;
+      answerSwitch.classList.remove("answer");
+      answerSwitch.classList.add("question");
+    }
+    return;
+  }
+});
+// initialize
+showCards(currentIndex);
+
+/* document.querySelector(".sendToDontKnow").addEventListener("click", (e) => {
+    dontknowArray.push(cards[idx]);
+    // optionally advance automatically:
+    currentIndex = Math.min(cards.length - 1, idx + 1);
+    showCards(currentIndex);
+    return;
+  }); */
+/*  if (e.target.id === "restart") {
+    currentIndex = 0;
+    showCards(currentIndex);
+    return;
+  } */
+
+/* document.querySelector(".sendToKnow").addEventListener("click", (e) => {
+   knowArray.push(cards[idx]);
+    currentIndex = Math.min(cards.length - 1, idx + 1);
+    showCards(currentIndex);
+    return;
+  } */
+
+/* function flipCard() {
   const selectCard = document.querySelector(".card");
   let display = document.querySelector(".flashcards");
   selectCard.addEventListener("click", function (event) {
@@ -80,23 +126,23 @@ function flipCard() {
     </div>`,
     );
   });
-}
+} */
 
-function sendtoArray() {
+function sendToArray() {
   const buttons = document.querySelectorAll("button");
   const btnArr = Array.from(buttons);
   btnArr.forEach((btn) => {
     btn.addEventListener("click", function (event) {
-      if (event.target.id === "dontKnow") {
-        dontknowArray.push(card);
-      } else if (event.target.id === "know") {
-        knowArray.push(card);
+      if (event.target.id === "sendToDontKnow") {
+        dontknowArray.push(cards[idx]);
+      } else if (event.target.id === "sendToKnow") {
+        knowArray.push(cards[idx]);
       }
     });
   });
 }
 
-function filterByButton() {
+/* function filterByButton() {
   let display = document.querySelector("#flashcards");
   display.innerHTML = "";
   const buttons = document.querySelectorAll("button");
@@ -131,9 +177,9 @@ function filterByButton() {
     }),
   );
 }
-filterByButton();
+filterByButton(); */
 
-document.getElementById("form").addEventListener("submit", function (e) {
+/*document.getElementById("form").addEventListener("submit", function (e) {
   e.preventDefault(); // stops page from refreshing
   let album = {};
   album.name = document.getElementById("name").value;
@@ -145,3 +191,4 @@ document.getElementById("form").addEventListener("submit", function (e) {
   inject(album); // add to the page
   clearFields(); // reset form inputs
 });
+ */
