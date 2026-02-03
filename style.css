@@ -16,13 +16,11 @@ body {
   padding: 20px;
   font-size: 90px;
   color: #ffffff;
-  text-shadow: #799176 3px 3px 5px;
   margin: 15px;
-  font-family: 'Times New Roman', Times, serif;
 }
 .card {
-  width: 20vw;
-  height: 400px;
+  width: 40vw;
+  height: 40vh;
   background-color: #e2e2e4;
   margin: 15px auto;
   border-radius: 20px;
@@ -30,11 +28,19 @@ body {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  text-align: center;
+  justify-content: center;
   box-shadow: #2d353d 10px 10px 20px;
   flex-wrap: wrap;
   transition: 0.3s;
+}
+
+.sortButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+  margin: auto;
 }
 
 .filterButtons {
@@ -44,6 +50,26 @@ body {
   padding: 10px;
   margin: auto;
 }
+
+.dontKnow {
+  font-size: 35px;
+  margin-left: auto;
+  text-align: center;
+    }
+
+.know {
+  font-size: 35px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.restart {
+  font-size: 35px;
+  margin-right: auto;
+  text-align: center;
+}
+
 .flashcards {
   width: 100vw;
   height: auto;
@@ -52,104 +78,4 @@ body {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-}
-
-.card-header {
-  font-family: "Sofia", cursive;
-  font-size: 21px;
-  text-align: center;
-  margin: 10px;
-}
-.text {
-  font-size: 20px;
-  margin: 5px;
-  text-align: center;
-}
-#dontKnow {
-  font-family: Georgia, 'Times New Roman', Times, serif
-  font-size: 39px;
-  margin-left: auto;
-    text-align: center;
-    }
-
-#know {
-  font-family: "Comic Neue", cursive;
-  font-size: 39px;
-  margin-left: 10px;
-  margin-right: 10px;
-  text-align: center;
-}
-
-#restart {
-  font-family: "Comic Neue", cursive;
-  font-size: 39px;
-  margin-right: auto;
-  text-align: center;
-}
-
-@media screen and (max-width: 1000px) {
-  .container {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 10px;
-    margin: auto;
-    justify-content: space-around;
-  }
-  .card {
-    width: 30%;
-  }
-  #filterButtons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 10px;
-    margin: auto;
-  }
-}
-@media screen and (max-width: 800px) {
-  .card {
-    width: 60%;
-    height: auto;
-  }
-  #flashcards {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 10px;
-    margin: auto;
-    justify-content: space-around;
-  }
-  #filterButtons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 10px;
-    margin: auto;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .card {
-    width: 60%;
-    height: auto;
-  }
-  .container {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 10px;
-    margin: auto;
-    justify-content: space-around;
-  }
-  #filterButtons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 10px;
-    margin: auto;
-  }
 }

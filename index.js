@@ -10,15 +10,15 @@ const cards = [
   },
   {
     question: "What is the cooldown of Mary's mirror?",
-    answer: "i lowk forgot",
+    answer: "15 seconds",
   },
   {
     question: "What is the cooldown of Luchino's jump?",
-    answer: "i lowk forgot",
+    answer: "10 seconds",
   },
   {
-    question: "What is the cooldown of Fool Gold's pickaxe?",
-    answer: "i lowk forgot",
+    question: "What is the cooldown of Gamekeeper's hook?",
+    answer: "13 seconds",
   },
   {
     question:
@@ -27,12 +27,16 @@ const cards = [
   },
   {
     question: "What is the cooldown of Axe Boy's soul?",
-    answer: "i lowk forgot",
+    answer: "13 seconds",
   },
   {
     question: "How long does it take for Bonbon's bombs to denotate?",
     answer:
       "2 seconds (if after 2 seconds it doesn't go off, can walk through)",
+  },
+  {
+    question: "What is the cooldown of Violinist's note?",
+    answer: "13 seconds",
   },
 ];
 let dontknowArray = [];
@@ -42,6 +46,7 @@ let currentIndex = 0;
 function showCards(index) {
   const flashcards = document.querySelector(".flashcards");
   flashcards.innerHTML = "";
+
   if (!cards || cards.length === 0) {
     flashcards.innerHTML = `
     <div class="card">
@@ -53,7 +58,6 @@ function showCards(index) {
     flashcards.innerHTML = `
       <div class="card">
         <p>All cards have been studied</p>
-        <button id="restart">Restart</button>
       </div>`;
     return;
   }
@@ -65,130 +69,80 @@ function showCards(index) {
     </div>`,
   );
 }
-document.querySelector(".flashcards").addEventListener("click", (e) => {
-  const cardEl = e.target.closest(".card");
-  const idx = cardEl?.dataset.index
-    ? Number(cardEl.dataset.index)
-    : currentIndex;
-
-  // show answer when clicking the card itself (ignore clicks on buttons)
-  if (cardEl && !e.target.closest("button")) {
-    const questionSwitch = cardEl.querySelector(".question");
-    const answerSwitch = cardEl.querySelector(".answer");
-    if (questionSwitch) {
-      // replace question with answer
-      questionSwitch.textContent = cards[idx].answer;
-      questionSwitch.classList.remove("question");
-      questionSwitch.classList.add("answer");
-    } else if (answerSwitch) {
-      // if answer already shown, toggle back to question
-      answerSwitch.textContent = cards[idx].question;
-      answerSwitch.classList.remove("answer");
-      answerSwitch.classList.add("question");
-    }
-    return;
-  }
-});
-// initialize
 showCards(currentIndex);
 
-/* document.querySelector(".sendToDontKnow").addEventListener("click", (e) => {
-    dontknowArray.push(cards[idx]);
-    // optionally advance automatically:
-    currentIndex = Math.min(cards.length - 1, idx + 1);
-    showCards(currentIndex);
-    return;
-  }); */
-/*  if (e.target.id === "restart") {
-    currentIndex = 0;
-    showCards(currentIndex);
-    return;
-  } */
+function flipCard() {
+  document.querySelector(".flashcards").addEventListener("click", (e) => {
+    const targetCard = e.target.closest(".card");
+    let index = currentIndex;
+    if (targetCard && targetCard.dataset.index) {
+      index = Number(targetCard.dataset.index);
+    }
 
-/* document.querySelector(".sendToKnow").addEventListener("click", (e) => {
-   knowArray.push(cards[idx]);
-    currentIndex = Math.min(cards.length - 1, idx + 1);
-    showCards(currentIndex);
-    return;
-  } */
+    if (targetCard) {
+      const questionSwitch = targetCard.querySelector(".question");
+      const answerSwitch = targetCard.querySelector(".answer");
+      if (questionSwitch) {
+        questionSwitch.textContent = cards[index].answer;
 
-/* function flipCard() {
-  const selectCard = document.querySelector(".card");
-  let display = document.querySelector(".flashcards");
-  selectCard.addEventListener("click", function (event) {
-    document.innerHTML = "";
-    display.insertAdjacentHTML(
-      "afterbegin",
-      `<div class="card">
-      <h2 class="answer">${card.answer}</h2>
-      <button id="dontKnow">Still Need to Study</button>
-      <button id="know">Studied</button>
-    </div>`,
-    );
+        questionSwitch.classList.remove("question");
+        questionSwitch.classList.add("answer");
+      } else if (answerSwitch) {
+        answerSwitch.textContent = cards[index].question;
+
+        answerSwitch.classList.remove("answer");
+        answerSwitch.classList.add("question");
+      }
+      return;
+    }
   });
-} */
+}
+flipCard();
 
 function sendToArray() {
-  const buttons = document.querySelectorAll("button");
-  const btnArr = Array.from(buttons);
-  btnArr.forEach((btn) => {
-    btn.addEventListener("click", function (event) {
-      if (event.target.id === "sendToDontKnow") {
-        dontknowArray.push(cards[idx]);
-      } else if (event.target.id === "sendToKnow") {
-        knowArray.push(cards[idx]);
-      }
-    });
+  document.querySelector(".sortButtons").addEventListener("click", (e) => {
+    if (e.target.classList.contains("sendToDontKnow")) {
+      dontknowArray.push(cards[currentIndex]);
+      currentIndex = Math.min(currentIndex + 1, cards.length);
+      showCards(currentIndex);
+    } else if (e.target.classList.contains("sendToKnow")) {
+      knowArray.push(cards[currentIndex]);
+      currentIndex = Math.min(currentIndex + 1, cards.length);
+      showCards(currentIndex);
+    }
   });
 }
+sendToArray();
 
-/* function filterByButton() {
-  let display = document.querySelector("#flashcards");
-  display.innerHTML = "";
-  const buttons = document.querySelectorAll("button");
-  const btnArr = Array.from(buttons);
-  btnArr.forEach((btn) =>
-    btn.addEventListener("click", function (event) {
-      if (btn.id === "dontKnow") {
-        dontknowArray.forEach((card) => {
-          display.insertAdjacentHTML(
-            "afterbegin",
-            `<div class="card">
-      <h2 class="question">${card.question}</h2>
-    </div>`,
-          );
-        });
-      }
-      if (btn.id === "know") {
-        knowArray.forEach((card) => {
-          display.insertAdjacentHTML(
-            "afterbegin",
-            `<div class="card">
-      <h2 class="question">${card.question}</h2>
-    </div>`,
-          );
-        });
-      }
-      if (btn.id === "restart") {
-        let display = document.querySelector(".flashcards");
-        display.innerHTML = "";
-        inject(card);
-      }
-    }),
-  );
+function filterCards() {
+  document.querySelector(".filterButtons").addEventListener("click", (e) => {
+    const flashcards = document.querySelector(".flashcards");
+    if (e.target.classList.contains("dontKnow")) {
+      flashcards.innerHTML = "";
+      dontknowArray.forEach((card) => {
+        flashcards.insertAdjacentHTML(
+          "beforeend",
+          `<div class="card">
+          <h2 class="question">${card.question}</h2>
+        </div>`,
+        );
+      });
+    } else if (e.target.classList.contains("know")) {
+      flashcards.innerHTML = "";
+      knowArray.forEach((card) => {
+        flashcards.insertAdjacentHTML(
+          "beforeend",
+          `<div class="card">
+          <h2 class="question">${card.question}</h2>
+        </div>`,
+        );
+      });
+    } else if (e.target.classList.contains("restart")) {
+      currentIndex = 0;
+      dontknowArray = [];
+      knowArray = [];
+      showCards(currentIndex);
+    }
+  });
 }
-filterByButton(); */
-
-/*document.getElementById("form").addEventListener("submit", function (e) {
-  e.preventDefault(); // stops page from refreshing
-  let album = {};
-  album.name = document.getElementById("name").value;
-  album.img = document.getElementById("img").value;
-  album.category = document.getElementById("category").value;
-  album.year = document.getElementById("year").value;
-  console.log(album);
-  songs.push(album);
-  inject(album); // add to the page
-  clearFields(); // reset form inputs
-});
- */
+filterCards();
