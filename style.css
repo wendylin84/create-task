@@ -2,11 +2,10 @@ html,
 body,
 * {
   margin: 0;
-  /*   padding: 0; */
   box-sizing: border-box;
   font-size: 30px;
   font-family: 'Times New Roman', Times, serif
-  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-x: hidden; 
 }
 body {
   background-color: #000000;
