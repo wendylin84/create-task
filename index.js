@@ -43,17 +43,18 @@ let dontknowArray = [];
 let knowArray = [];
 let currentIndex = 0;
 
-function showCards(index) {
+function showCards(index, showAnswer) {
   const flashcards = document.querySelector(".flashcards");
   flashcards.innerHTML = "";
 
   if (!cards || cards.length === 0) {
     flashcards.innerHTML = `
     <div class="card">
-    <p>No cards available</p>
+      <p>No cards available</p>
     </div>`;
     return;
   }
+
   if (index >= cards.length) {
     flashcards.innerHTML = `
       <div class="card">
@@ -61,15 +62,26 @@ function showCards(index) {
       </div>`;
     return;
   }
+
   const card = cards[index];
-  flashcards.insertAdjacentHTML(
-    "beforeend",
-    `<div class="card" data-index="${index}">
-      <h2 class="question">${card.question}</h2>
-    </div>`,
-  );
+
+  if (showAnswer) {
+    flashcards.insertAdjacentHTML(
+      "beforeend",
+      `<div class="card">
+        <h2 class="answer">${card.answer}</h2>
+      </div>`,
+    );
+  } else {
+    flashcards.insertAdjacentHTML(
+      "beforeend",
+      `<div class="card">
+        <h2 class="question">${card.question}</h2>
+      </div>`,
+    );
+  }
 }
-showCards(currentIndex);
+showCards(currentIndex, false);
 
 function flipCard() {
   document.querySelector(".flashcards").addEventListener("click", (e) => {
@@ -104,11 +116,11 @@ function sendToArray() {
     if (e.target.classList.contains("sendToDontKnow")) {
       dontknowArray.push(cards[currentIndex]);
       currentIndex = Math.min(currentIndex + 1, cards.length);
-      showCards(currentIndex);
+      showCards(currentIndex, false);
     } else if (e.target.classList.contains("sendToKnow")) {
       knowArray.push(cards[currentIndex]);
       currentIndex = Math.min(currentIndex + 1, cards.length);
-      showCards(currentIndex);
+      showCards(currentIndex, false);
     }
   });
 }
@@ -120,12 +132,14 @@ function filterCards() {
     if (e.target.classList.contains("dontKnow")) {
       flashcards.innerHTML = "";
       dontknowArray.forEach((card) => {
-        flashcards.insertAdjacentHTML(
-          "beforeend",
-          `<div class="card">
-          <h2 class="question">${card.question}</h2>
-        </div>`,
-        );
+        if (card.question.length > 0) {
+          flashcards.insertAdjacentHTML(
+            "beforeend",
+            `<div class="card">
+        <h2 class="question">${card.question}</h2>
+      </div>`,
+          );
+        }
       });
     } else if (e.target.classList.contains("know")) {
       flashcards.innerHTML = "";
@@ -141,7 +155,7 @@ function filterCards() {
       currentIndex = 0;
       dontknowArray = [];
       knowArray = [];
-      showCards(currentIndex);
+      showCards(currentIndex, false);
     }
   });
 }
