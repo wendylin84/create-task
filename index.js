@@ -54,7 +54,6 @@ function showCards(index) {
     </div>`;
     return;
   }
-
   if (index >= cards.length) {
     flashcards.innerHTML = `
       <div class="card">
@@ -62,7 +61,6 @@ function showCards(index) {
       </div>`;
     return;
   }
-
   const card = cards[index];
   flashcards.insertAdjacentHTML(
     "beforeend",
