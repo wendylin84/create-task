@@ -43,7 +43,7 @@ let dontknowArray = [];
 let knowArray = [];
 let currentIndex = 0;
 
-function showCards(index, showAnswer) {
+function showCards(index) {
   const flashcards = document.querySelector(".flashcards");
   flashcards.innerHTML = "";
 
@@ -64,24 +64,14 @@ function showCards(index, showAnswer) {
   }
 
   const card = cards[index];
-
-  if (showAnswer) {
-    flashcards.insertAdjacentHTML(
-      "beforeend",
-      `<div class="card">
-        <h2 class="answer">${card.answer}</h2>
-      </div>`,
-    );
-  } else {
-    flashcards.insertAdjacentHTML(
-      "beforeend",
-      `<div class="card">
+  flashcards.insertAdjacentHTML(
+    "beforeend",
+    `<div class="card" data-index="${index}>
         <h2 class="question">${card.question}</h2>
       </div>`,
-    );
-  }
+  );
 }
-showCards(currentIndex, false);
+showCards(currentIndex);
 
 function flipCard() {
   document.querySelector(".flashcards").addEventListener("click", (e) => {
@@ -116,11 +106,11 @@ function sendToArray() {
     if (e.target.classList.contains("sendToDontKnow")) {
       dontknowArray.push(cards[currentIndex]);
       currentIndex = Math.min(currentIndex + 1, cards.length);
-      showCards(currentIndex, false);
+      showCards(currentIndex);
     } else if (e.target.classList.contains("sendToKnow")) {
       knowArray.push(cards[currentIndex]);
       currentIndex = Math.min(currentIndex + 1, cards.length);
-      showCards(currentIndex, false);
+      showCards(currentIndex);
     }
   });
 }
@@ -132,14 +122,12 @@ function filterCards() {
     if (e.target.classList.contains("dontKnow")) {
       flashcards.innerHTML = "";
       dontknowArray.forEach((card) => {
-        if (card.question.length > 0) {
-          flashcards.insertAdjacentHTML(
-            "beforeend",
-            `<div class="card">
+        flashcards.insertAdjacentHTML(
+          "beforeend",
+          `<div class="card">
         <h2 class="question">${card.question}</h2>
       </div>`,
-          );
-        }
+        );
       });
     } else if (e.target.classList.contains("know")) {
       flashcards.innerHTML = "";
@@ -155,7 +143,7 @@ function filterCards() {
       currentIndex = 0;
       dontknowArray = [];
       knowArray = [];
-      showCards(currentIndex, false);
+      showCards(currentIndex);
     }
   });
 }
